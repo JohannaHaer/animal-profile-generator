@@ -1,4 +1,4 @@
-#The Animal Profile Generator
+# The Animal Profile Generator
 
 Here, in the coming time, my passion project will take shape.
 

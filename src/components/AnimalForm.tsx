@@ -3,7 +3,7 @@ import { Input } from "./Input";
 import { Textarea } from "./Textarea";
 
 type AnimalFormProps = {
-  animal: Animal;
+  animal: AnimalFormState;
   setAnimal: React.Dispatch<React.SetStateAction<AnimalFormState>>;
 };
 

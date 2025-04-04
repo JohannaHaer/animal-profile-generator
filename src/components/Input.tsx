@@ -1,4 +1,3 @@
-import React from 'react'
 type InputParam = {
   label: string, 
   value: string, 

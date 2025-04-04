@@ -1,4 +1,3 @@
-import React from "react";
 type TextareParam = {
   label: string;
   value: string;

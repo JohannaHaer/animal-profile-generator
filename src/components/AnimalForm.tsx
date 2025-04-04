@@ -1,6 +1,8 @@
 import React from "react";
 import { Input } from "./Input";
 import { Textarea } from "./Textarea";
+import FormSelect from "react-bootstrap/FormSelect";
+import Form from "react-bootstrap/Form";
 
 type AnimalFormProps = {
   animal: AnimalFormState;
@@ -15,7 +17,7 @@ export interface AnimalFormState {
   furColor: string;
   age: number | undefined;
   gender: AnimalGender | undefined;
-  isCastrated: boolean | undefined;
+  isCastrated: boolean;
   note: string;
   description: string;
 }
@@ -47,6 +49,36 @@ export const AnimalForm = ({ animal, setAnimal }: AnimalFormProps) => {
           });
         }}
       />
+      <Form>
+        <Form.Check
+          type="radio"
+          label="Hund"
+          name="type"
+          value={"Dog" as AnimalType}
+          onChange={(event) => {
+            setAnimal((prevState: AnimalFormState) => {
+              return {
+                ...prevState,
+                type: event.target.value as AnimalType,
+              };
+            });
+          }}
+        />
+        <Form.Check
+          type="radio"
+          label="Katze"
+          name="type"
+          value={"Cat" as AnimalType}
+          onChange={(event) => {
+            setAnimal((prevState: AnimalFormState) => {
+              return {
+                ...prevState,
+                type: event.target.value as AnimalType,
+              };
+            });
+          }}
+        />
+      </Form>
       <Input
         label="Rasse"
         value={animal.breed}
@@ -59,6 +91,25 @@ export const AnimalForm = ({ animal, setAnimal }: AnimalFormProps) => {
           });
         }}
       />
+      <FormSelect
+        onChange={(event) => {
+          setAnimal((prevState: AnimalFormState) => {
+            return {
+              ...prevState,
+              age: Number(event.target.value),
+            };
+          });
+        }}
+      >
+        <option value={undefined} disabled={animal.age != undefined}>
+          Alter auswählen
+        </option>
+        {Array.from({ length: 100 }, (_, index) => index).map((age) => (
+          <option key={age} value={age}>
+            {age}
+          </option>
+        ))}
+      </FormSelect>
       <Input
         label="Fellfarbe"
         value={animal.furColor}
@@ -71,29 +122,43 @@ export const AnimalForm = ({ animal, setAnimal }: AnimalFormProps) => {
           });
         }}
       />
+      <Form>
+        <Form.Check
+          label="Ist kastriert"
+          value={Number(animal.isCastrated)}
+          onChange={(newValue) => {
+            setAnimal((prevState: AnimalFormState) => {
+              return {
+                ...prevState,
+                isCastrated: Boolean(newValue),
+              };
+            });
+          }}
+        />
+      </Form>
       <Textarea
         label="Besondere Anmerkung"
         value={animal.note}
         onChange={(newValue) => {
-            setAnimal((prevState: AnimalFormState) => {
-              return {
-                ...prevState,
-                note: newValue,
-              };
-            });
-          }}
+          setAnimal((prevState: AnimalFormState) => {
+            return {
+              ...prevState,
+              note: newValue,
+            };
+          });
+        }}
       />
       <Textarea
         label="Beschreibung"
         value={animal.description}
         onChange={(newValue) => {
-            setAnimal((prevState: AnimalFormState) => {
-              return {
-                ...prevState,
-                description: newValue,
-              };
-            });
-          }}
+          setAnimal((prevState: AnimalFormState) => {
+            return {
+              ...prevState,
+              description: newValue,
+            };
+          });
+        }}
       />
     </div>
   );

@@ -18,7 +18,7 @@ function App() {
     furColor: "",
     age: undefined,
     gender: undefined,
-    isCastrated: undefined,
+    isCastrated: false,
     note: "",
     description: "", 
   });

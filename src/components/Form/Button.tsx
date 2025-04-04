@@ -1,3 +1,4 @@
+import React from 'react'
 type ButtonParam = {
     text: string
     onClick: () => void

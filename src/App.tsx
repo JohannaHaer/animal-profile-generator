@@ -1,12 +1,7 @@
 import { useState } from "react";
-import { Input } from "./components/Input";
 import { Button } from "./components/Button";
-
-interface AnimalKeeper {
-  firstName: string;
-  lastName: string;
-  email: string;
-}
+import { AnimalKeeperForm } from "./components/AnimalKeeperForm";
+import { AnimalForm, AnimalFormState } from "./components/AnimalForm"
 
 function App() {
   const [animalKeeper, setAnimalKeeper] = useState<AnimalKeeper>({
@@ -14,49 +9,32 @@ function App() {
     lastName: "",
     email: "",
   });
+
+  const [animal, setAnimal] = useState<AnimalFormState>({
+    animalId: "",
+    name: "",
+    type: undefined,
+    breed: "",
+    furColor: "",
+    age: undefined,
+    gender: undefined,
+    isCastrated: undefined,
+    note: "",
+    description: "", 
+  });
+
   return (
     <>
-      <form action="" className="flex flex-col gap-6">
-        <Input
-          label="Vorname"
-          value={animalKeeper.firstName}
-          onChange={(newValue) => {
-            setAnimalKeeper((prevState: AnimalKeeper) => {
-              return {
-                ...prevState,
-                firstName: newValue,
-              };
-            });
-          }}
+      <form action="" className="flex flex-col">
+        <AnimalKeeperForm
+          animalKeeper={animalKeeper}
+          setAnimalKeeper={setAnimalKeeper}
         />
-        <Input
-        label="Nachname"
-        value={animalKeeper.lastName}
-        onChange={(newValue) => {
-          setAnimalKeeper((prevState: AnimalKeeper) => {
-            return {
-              ...prevState,
-              lastName: newValue,
-            };
-          });
-        }}
-      />
-      <Input
-        label="E-Mail"
-        value={animalKeeper.email}
-        onChange={(newValue) => {
-          setAnimalKeeper((prevState: AnimalKeeper) => {
-            return {
-              ...prevState,
-              email: newValue,
-            };
-          });
-        }}
-      />
-      <Button
-        text='Absenden'
-        onClick={() => console.log(animalKeeper)}
-      />
+        <AnimalForm
+          animal={animal}
+          setAnimal={setAnimal}
+        />
+        <Button text="Absenden" onClick={() => console.log(animalKeeper)} />
       </form>
     </>
   );

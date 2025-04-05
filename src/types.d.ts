@@ -15,6 +15,7 @@ interface Animal {
   isCastrated: boolean;
   note: string;
   description: string;
+  image: File | null;
 }
 
 type AnimalGender = 'male' | 'female'

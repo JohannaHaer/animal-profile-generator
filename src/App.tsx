@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Button } from "./components/Button";
+import { Button } from "./components/Form/Button";
 import { AnimalKeeperForm } from "./components/AnimalKeeperForm";
-import { AnimalForm, AnimalFormState } from "./components/AnimalForm"
+import { AnimalForm, AnimalFormState } from "./components/AnimalForm";
 
 function App() {
   const [animalKeeper, setAnimalKeeper] = useState<AnimalKeeper>({
@@ -20,23 +20,20 @@ function App() {
     gender: undefined,
     isCastrated: false,
     note: "",
-    description: "", 
+    description: "",
   });
 
   return (
-    <>
-      <form action="" className="flex flex-col">
+    <div className="flex flex-col">
+      <div className="flex">
         <AnimalKeeperForm
           animalKeeper={animalKeeper}
           setAnimalKeeper={setAnimalKeeper}
         />
-        <AnimalForm
-          animal={animal}
-          setAnimal={setAnimal}
-        />
-        <Button text="Absenden" onClick={() => console.log(animalKeeper)} />
-      </form>
-    </>
+        <AnimalForm animal={animal} setAnimal={setAnimal} />
+      </div>
+      <Button text="Absenden" onClick={() => console.log(animalKeeper)}/>
+    </div>
   );
 }
 

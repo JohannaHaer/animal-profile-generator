@@ -1,7 +1,6 @@
-import React from "react";
-import { Input } from "./Input";
-import { Textarea } from "./Textarea";
-import FormSelect from "react-bootstrap/FormSelect";
+import { Input } from "./Form/Input";
+import React, { ChangeEvent } from "react";
+import { Textarea } from "./Form/Textarea";
 import Form from "react-bootstrap/Form";
 
 type AnimalFormProps = {
@@ -20,9 +19,26 @@ export interface AnimalFormState {
   isCastrated: boolean;
   note: string;
   description: string;
+  images: File[];
 }
 
 export const AnimalForm = ({ animal, setAnimal }: AnimalFormProps) => {
+  const handleOnFileInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setAnimal((prevState: AnimalFormState) => {
+      const fileList = event.target.files || [];
+      const files = [];
+
+      for (let index = 0; index < fileList?.length; index++) {
+        files.push(fileList[index]);
+      }
+
+      return {
+        ...prevState,
+        images: files,
+      };
+    });
+  };
+
   return (
     <div>
       <Input
@@ -49,7 +65,7 @@ export const AnimalForm = ({ animal, setAnimal }: AnimalFormProps) => {
           });
         }}
       />
-      <Form>
+      <Form.Group>
         <Form.Check
           type="radio"
           label="Hund"
@@ -78,7 +94,7 @@ export const AnimalForm = ({ animal, setAnimal }: AnimalFormProps) => {
             });
           }}
         />
-      </Form>
+      </Form.Group>
       <Input
         label="Rasse"
         value={animal.breed}
@@ -91,7 +107,7 @@ export const AnimalForm = ({ animal, setAnimal }: AnimalFormProps) => {
           });
         }}
       />
-      <FormSelect
+      <Form.Select
         onChange={(event) => {
           setAnimal((prevState: AnimalFormState) => {
             return {
@@ -109,7 +125,37 @@ export const AnimalForm = ({ animal, setAnimal }: AnimalFormProps) => {
             {age}
           </option>
         ))}
-      </FormSelect>
+      </Form.Select>
+      <Form.Group>
+        <Form.Check
+          type="radio"
+          label="Männlich"
+          name="gender"
+          value={"male" as AnimalGender}
+          onChange={(event) => {
+            setAnimal((prevState: AnimalFormState) => {
+              return {
+                ...prevState,
+                gender: event.target.value as AnimalGender,
+              };
+            });
+          }}
+        />
+        <Form.Check
+          type="radio"
+          label="Weiblich"
+          name="gender"
+          value={"female" as AnimalGender}
+          onChange={(event) => {
+            setAnimal((prevState: AnimalFormState) => {
+              return {
+                ...prevState,
+                gender: event.target.value as AnimalGender,
+              };
+            });
+          }}
+        />
+      </Form.Group>
       <Input
         label="Fellfarbe"
         value={animal.furColor}
@@ -122,7 +168,7 @@ export const AnimalForm = ({ animal, setAnimal }: AnimalFormProps) => {
           });
         }}
       />
-      <Form>
+      <Form.Group>
         <Form.Check
           label="Ist kastriert"
           value={Number(animal.isCastrated)}
@@ -135,7 +181,7 @@ export const AnimalForm = ({ animal, setAnimal }: AnimalFormProps) => {
             });
           }}
         />
-      </Form>
+      </Form.Group>
       <Textarea
         label="Besondere Anmerkung"
         value={animal.note}
@@ -160,6 +206,10 @@ export const AnimalForm = ({ animal, setAnimal }: AnimalFormProps) => {
           });
         }}
       />
+      <Form.Group>
+        <Form.Label>Bilder anhängen</Form.Label>
+        <Form.Control type="file" multiple onChange={handleOnFileInputChange} />
+      </Form.Group>
     </div>
   );
 };
